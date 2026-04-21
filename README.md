@@ -1,69 +1,29 @@
-#🌿 Water Stress Camera AI
-Water Stress Camera คือระบบตรวจจับภาวะขาดน้ำของพืชโดยใช้เทคโนโลยี Edge AI (Computer Vision) ออกแบบมาเพื่อทำงานบน Raspberry Pi หรืออุปกรณ์ขนาดเล็ก โดยใช้โมเดล TensorFlow Lite ในการวิเคราะห์ภาพถ่ายพืชแบบ Real-time เพื่อประเมินว่าพืชกำลังอยู่ในภาวะขาดน้ำ (Water Stress) หรือไม่
+# 🌿 Water Stress Camera AI 
 
-#✨ คุณสมบัติ (Features)
-Image Capture: รองรับการถ่ายภาพจาก Pi Camera (libcamera) และมีระบบ Mock-up หากไม่พบกล้อง
+![Python](https://img.shields.io/badge/Python-3.7%2B-blue?style=for-the-badge&logo=python)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-Lite-orange?style=for-the-badge&logo=tensorflow)
+![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-Powered-A22846?style=for-the-badge&logo=raspberry-pi)
 
-Edge Inference: ประมวลผลภาพด้วย TensorFlow Lite เพื่อความรวดเร็วและไม่ต้องพึ่งพาอินเทอร์เน็ต
+**Water Stress Camera** คือระบบอัจฉริยะสำหรับตรวจจับภาวะขาดน้ำของพืช (Water Stress) โดยใช้เทคโนโลยี **Edge AI** และ **Computer Vision** ออกแบบมาเพื่อให้ทำงานบนอุปกรณ์ขนาดเล็กอย่าง Raspberry Pi ได้อย่างมีประสิทธิภาพ เพื่อช่วยให้เกษตรกรหรือผู้ปลูกต้นไม้สามารถดูแลพืชพรรณได้อย่างแม่นยำ
 
-Smart Decision: ระบบตัดสินใจอัตโนมัติด้วย Threshold ที่ปรับแต่งได้
+---
 
-Cloud Integration: รองรับการส่งผลลัพธ์ขึ้นระบบ Cloud เพื่อการติดตามระยะไกล
+## ✨ คุณสมบัติเด่น (Key Features)
 
-Robustness: มีระบบ Fallback ในกรณีที่ไม่มีไฟล์โมเดลหรือไลบรารี TFLite
+- 📸 **Smart Capture**: รองรับการสั่งถ่ายภาพผ่านโมดูลกล้อง (libcamera) พร้อมระบบสำรอง (Mock Mode)
+- 🧠 **Edge Inference**: ประมวลผลด้วยโมดูล AI ขนาดเล็ก (TFLite) ภายในเครื่อง ไม่ต้องง้ออินเทอร์เน็ต
+- ⚙️ **Pre-processing**: ระบบปรับแต่งภาพอัตโนมัติ (Resize/Normalize) ให้พร้อมสำหรับ AI Model
+- ☁️ **Cloud Ready**: มีระบบจำลองการส่งข้อมูลขึ้น Cloud เพื่อดูผลลัพธ์ย้อนหลัง
+- 🛡️ **Defense Logic**: ระบบตัดสินใจที่ปรับแต่งค่าความอ่อนไหว (Threshold) ได้ตามประเภทของพืช
 
-🛠 สถาปัตยกรรมระบบ (System Architecture)
-โปรเจกต์นี้มีขั้นตอนการทำงาน (Pipeline) ดังนี้:
+---
 
-Capture: รับภาพดิบจากกล้อง
+## 🛠 การทำงานของระบบ (Workflow)
 
-Preprocess: ปรับขนาดภาพเป็น 224x224 และทำ Normalization (0-1)
-
-Inference: ส่งข้อมูลเข้าโมเดล TFLite เพื่อคำนวณ Water Stress Score
-
-Decision: ตรวจสอบ Score กับค่า Threshold (Default: 0.5)
-
-Report: แสดงผลและจำลองการอัปโหลดข้อมูลขึ้น Cloud
-
-📦 การติดตั้ง (Installation)
-1. เตรียมสภาพแวดล้อม
-แนะนำให้ใช้งานบน Raspberry Pi OS ที่ติดตั้ง Python 3.x ไว้แล้ว
-
-2. ติดตั้ง Library ที่จำเป็น
-Bash
-pip install numpy Pillow
-สำหรับ TensorFlow Lite Runtime (หากใช้บน Pi):
-
-Bash
-pip install tflite-runtime
-3. เตรียมโมเดล
-วางไฟล์โมเดล AI ของคุณไว้ที่โฟลเดอร์หลักและตั้งชื่อว่า model.tflite
-
-🚀 วิธีการใช้งาน (Usage)
-สั่งรันโปรแกรมหลักด้วยคำสั่ง:
-
-Bash
-python main.py
-รายละเอียดการทำงานของโค้ด:
-หากติดตั้ง tflite_runtime และมีไฟล์ model.tflite: ระบบจะทำการทำนายผลจริงจากภาพ
-
-หากไม่มีระบบ TFLite: ระบบจะเข้าสู่ Simulation Mode (สุ่มค่าคะแนนเพื่อทดสอบ Flow การทำงาน)
-
-📁 โครงสร้างไฟล์ (File Structure)
-Plaintext
-water_stress_camera/
-├── main.py            # ไฟล์หลักของโปรแกรม
-├── model.tflite       # ไฟล์โมเดล AI (ต้องเตรียมเอง)
-├── plant.jpg          # ภาพที่ถ่ายล่าสุด
-└── README.md          # เอกสารอธิบายโครงการ
-⚙️ การตั้งค่า (Configuration)
-คุณสามารถปรับแต่งการตัดสินใจได้ในฟังก์ชัน decide:
-
-Python
-# ปรับค่า threshold (0.0 - 1.0) 
-# ค่าสูง = ต้องมั่นใจมากถึงจะเตือนว่าขาดน้ำ
-status = decide(score, threshold=0.5)
-🤝 การสนับสนุน (Contribution)
-หากคุณต้องการปรับปรุงระบบ เช่น เพิ่มการส่งข้อมูลผ่าน MQTT หรือ Line Notify สามารถ Fork โปรเจกต์นี้และส่ง Pull Request มาได้เลย!
-
-Developed with ❤️ for Smart Agriculture
+```mermaid
+graph LR
+    A[Camera Capture] --> B[Image Preprocessing]
+    B --> C[AI Model Inference]
+    C --> D{Decision Logic}
+    D -- Stress --> E[Cloud Alert]
+    D -- Normal --> F[Log Status]
