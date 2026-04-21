@@ -1,7 +1,7 @@
-🌿 Water Stress Camera AI
+#🌿 Water Stress Camera AI
 Water Stress Camera คือระบบตรวจจับภาวะขาดน้ำของพืชโดยใช้เทคโนโลยี Edge AI (Computer Vision) ออกแบบมาเพื่อทำงานบน Raspberry Pi หรืออุปกรณ์ขนาดเล็ก โดยใช้โมเดล TensorFlow Lite ในการวิเคราะห์ภาพถ่ายพืชแบบ Real-time เพื่อประเมินว่าพืชกำลังอยู่ในภาวะขาดน้ำ (Water Stress) หรือไม่
 
-✨ คุณสมบัติ (Features)
+#✨ คุณสมบัติ (Features)
 Image Capture: รองรับการถ่ายภาพจาก Pi Camera (libcamera) และมีระบบ Mock-up หากไม่พบกล้อง
 
 Edge Inference: ประมวลผลภาพด้วย TensorFlow Lite เพื่อความรวดเร็วและไม่ต้องพึ่งพาอินเทอร์เน็ต
